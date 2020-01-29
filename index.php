@@ -6,18 +6,25 @@ if (filter_has_var(INPUT_POST, 'submit')) {
     $name = htmlspecialchars($_POST['name']);
     $phone = htmlspecialchars($_POST['phone']);
     $email = htmlspecialchars($_POST['email']);
+    $option = null;
+    if (isset($_POST['options'])) {
+        $option = $_POST['options'];
+    }
 
     if (empty($name) or empty($phone) or empty($email)) {
         $feedback_message = 'Por favor preencha todos os campos!';
         $message_class = 'alert-danger';
     } else {
-        if (filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
+        if (empty($option)) {
+            $feedback_message = 'Por favor selecione uma opção!';
+            $message_class = 'alert-danger';
+        } else if (filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
             $feedback_message = 'Email Inválido!';
             $message_class = 'alert-danger';
         } else {
             $to = "postaligustavo@gmail.com";
             $subject = "LEAD LANDING PAGE PROCESSO SELETIVO CALINA";
-            $mail_message = "Nome: " . $name . "\nTelefone: " . $phone . "\nEmail: " . $email;
+            $mail_message = "Nome: " . $name . "\nTelefone: " . $phone . "\nEmail: " . $email . "\nOpção: " . $option;
 
             mail($to, $subject, $mail_message);
             $feedback_message = 'Obrigado!';
@@ -87,6 +94,17 @@ if (filter_has_var(INPUT_POST, 'submit')) {
                                 <div class="form-group">
                                     <label for="email">Email</label>
                                     <input type="email" class="form-control" id="email" aria-describedby="email" placeholder="Email" name="email" value="<?php echo isset($_POST['email']) ? $email : ''; ?>" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="options">Selecione uma opção</label>
+                                    <select class="form-control" id="options" name="options">
+                                        <option value='0'></option>
+                                        <option value='1'>Opção 1</option>
+                                        <option value='2'>Opção 2</option>
+                                        <option value='3'>Opção 3</option>
+                                        <option value='4'>Opção 4</option>
+                                        <option value='5'>Opção 5</option>
+                                    </select>
                                 </div>
                                 <button type="submit" class="btn btn-success" name='submit'>Enviar</button>
                             </form>

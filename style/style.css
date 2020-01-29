@@ -1,0 +1,116 @@
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+
+.container-fluid {
+  padding: 0px;
+}
+
+#banner {
+  background: url(../img/landing-page-background-5_1900x765.png) no-repeat
+    center right fixed;
+  height: 100%;
+  position: relative;
+  width: 100%;
+  background-size: cover;
+  font-family: "Raleway", sans-serif;
+}
+
+.welcome-block {
+  height: 100vh;
+  display: table;
+  width: 100%;
+}
+
+#welcome-header {
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+  width: 100%;
+  padding: 4em;
+}
+
+.form-block {
+  height: 100vh;
+  display: table;
+  width: 100%;
+}
+
+.form-container {
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+  padding: 4em;
+}
+
+#info {
+  width: 100%;
+  background-color: #92dce5;
+  font-family: "Raleway", sans-serif;
+}
+
+.info-block {
+  display: table;
+  width: 100%;
+  height: 60vh;
+}
+
+.info-text {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+  padding: 2em;
+}
+
+footer {
+  background-color: #678798;
+  color: azure;
+}
+
+.contact-block,
+.social-block {
+  padding: 2em;
+  margin-bottom: 1em;
+}
+
+.fas {
+  padding-left: 0.5em;
+}
+
+.fab {
+  color: white;
+  font-size: 25px;
+  padding: 0.5em;
+}
+
+.fab:hover {
+  text-decoration: none;
+}
+
+.fa-instagram:hover {
+  color: purple;
+}
+
+.fa-youtube:hover {
+  color: red;
+}
+
+.row {
+  margin-right: 0px;
+  margin-left: 0px;
+}
+
+.error {
+  color: red;
+}
+
+@media (max-width: 576px) {
+  .form-container {
+    padding: 2em;
+  }
+  .welcome-block {
+    padding: 2em;
+  }
+}

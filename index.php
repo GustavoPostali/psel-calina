@@ -1,16 +1,22 @@
 <?php
+
+//variáveis que armazenam a mensagem de feedback/erro e a classe para aplicação do estilo da mensagem
 $feedback_message = '';
 $message_class = '';
 
+//checa se a requisição post foi realizada
 if (filter_has_var(INPUT_POST, 'submit')) {
+
+    //tratamento e armazenamento dos valores recebidos pela requisição post
     $name = htmlspecialchars($_POST['name']);
     $phone = htmlspecialchars($_POST['phone']);
     $email = htmlspecialchars($_POST['email']);
-    $option = null;
     if (isset($_POST['options'])) {
         $option = $_POST['options'];
     }
 
+
+    //validação e atribuição das mensagens de feedback de acordo com os valores das variáveis
     if (empty($name) or empty($phone) or empty($email)) {
         $feedback_message = 'Por favor preencha todos os campos!';
         $message_class = 'alert-danger';
@@ -21,8 +27,8 @@ if (filter_has_var(INPUT_POST, 'submit')) {
         } else if (filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
             $feedback_message = 'Email Inválido!';
             $message_class = 'alert-danger';
-        } else {
-            $to = "postaligustavo@gmail.com";
+        } else { //em caso de sucesso da validação das variáveis envia o email e atribui mensagem de sucesso para feedback
+            $to = "leandro@calina.ag";
             $subject = "LEAD LANDING PAGE PROCESSO SELETIVO CALINA";
             $mail_message = "Nome: " . $name . "\nTelefone: " . $phone . "\nEmail: " . $email . "\nOpção: " . $option;
 

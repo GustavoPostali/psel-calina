@@ -1,3 +1,33 @@
+<?php
+$feedback_message = '';
+$message_class = '';
+
+if (filter_has_var(INPUT_POST, 'submit')) {
+    $name = htmlspecialchars($_POST['name']);
+    $phone = htmlspecialchars($_POST['phone']);
+    $email = htmlspecialchars($_POST['email']);
+
+    if (empty($name) or empty($phone) or empty($email)) {
+        $feedback_message = 'Por favor preencha todos os campos!';
+        $message_class = 'alert-danger';
+    } else {
+        if (filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
+            $feedback_message = 'Email Inválido!';
+            $message_class = 'alert-danger';
+        } else {
+            $to = "postaligustavo@gmail.com";
+            $subject = "LEAD LANDING PAGE PROCESSO SELETIVO CALINA";
+            $mail_message = "Nome: " . $name . "\nTelefone: " . $phone . "\nEmail: " . $email;
+
+            mail($to, $subject, $mail_message);
+            $feedback_message = 'Obrigado!';
+            $message_class = 'alert-success';
+        }
+    }
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -40,18 +70,23 @@
                         <div class="form-container">
                             <h1>Deixe Seu Contato!</h1>
                             <br />
-                            <form method="POST">
+                            <?php
+                            if ($feedback_message != '') {
+                                echo "<div class='alert " . $message_class . "' role='alert'>" . $feedback_message . "</div>";
+                            }
+                            ?>
+                            <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
                                 <div class="form-group">
                                     <label for="name">Nome</label>
-                                    <input pattern="^[a-zA-Z ]*$" class="form-control" id="name" aria-describedby="name" placeholder="Nome" name="name" oninvalid="setCustomValidity('Nomes só podem conter letras!')" oninput="setCustomValidity('')" />
+                                    <input pattern="^[a-zA-Z ]*$" class="form-control" id="name" aria-describedby="name" placeholder="Nome" name="name" oninvalid="setCustomValidity('Nomes só podem conter letras!')" oninput="setCustomValidity('')" value="<?php echo isset($_POST['name']) ? $name : ''; ?>" />
                                 </div>
                                 <div class="form-group">
                                     <label for="phone">Telefone (Com DDD)</label>
-                                    <input pattern="\(\d{2}\)\d{4,5}-\d{4}$" class="form-control" id="phone" aria-describedby="phone" placeholder="Telefone" name="phone" oninvalid="setCustomValidity('Número de telefone inválido')" oninput="setCustomValidity('')" />
+                                    <input pattern="\(\d{2}\)\d{4,5}-\d{4}$" class="form-control" id="phone" aria-describedby="phone" placeholder="Telefone" name="phone" oninvalid="setCustomValidity('Número de telefone inválido!')" oninput="setCustomValidity('')" value="<?php echo isset($_POST['phone']) ? $phone : ''; ?>" />
                                 </div>
                                 <div class="form-group">
                                     <label for="email">Email</label>
-                                    <input type="email" class="form-control" id="email" aria-describedby="email" placeholder="Email" name="email" />
+                                    <input type="email" class="form-control" id="email" aria-describedby="email" placeholder="Email" name="email" value="<?php echo isset($_POST['email']) ? $email : ''; ?>" />
                                 </div>
                                 <button type="submit" class="btn btn-success" name='submit'>Enviar</button>
                             </form>
